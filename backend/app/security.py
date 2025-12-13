@@ -1,8 +1,8 @@
 
 from passlib.context import CryptContext
-import jwt, datetime
+import jwt, datetime, os
 
-SECRET = "CHANGE_ME"
+SECRET = os.getenv("SECRET", "dev_secret")
 pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def hash_password(p: str) -> str:
