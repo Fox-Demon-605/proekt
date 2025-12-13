@@ -1,44 +1,7 @@
 
-:root {
- --bg:#0f172a;
- --panel:#1e293b;
- --accent:#38bdf8;
- --text:#e5e7eb;
-}
-
-body {
- background:var(--bg);
- display:flex;
- justify-content:center;
- align-items:center;
- height:100vh;
- font-family:Arial;
-}
-
-.chat {
- background:var(--panel);
- width:360px;
- padding:10px;
- border-radius:12px;
-}
-
-#messages {
- height:280px;
- overflow-y:auto;
- color:var(--text);
-}
-
-#messages div::before {
- content:"• ";
- color:var(--accent);
-}
-
-.typing {
- display:none;
- color:var(--accent);
- font-size:12px;
-}
-
-button:hover {
- opacity:0.8;
-}
+:root{--bg:#0f172a;--panel:#1e293b;--accent:#38bdf8;--text:#e5e7eb;}
+body{background:var(--bg);display:flex;justify-content:center;align-items:center;height:100vh;font-family:Arial}
+.chat{background:var(--panel);width:360px;padding:10px;border-radius:12px}
+#messages{height:280px;overflow-y:auto;color:var(--text)}
+#typing{display:none;color:var(--accent);font-size:12px}
+button:hover{opacity:.8}
