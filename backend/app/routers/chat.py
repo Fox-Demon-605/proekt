@@ -1,5 +1,5 @@
 
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends, HTTPException
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from app.database import get_db
@@ -11,7 +11,7 @@ router = APIRouter(tags=["chat"])
 @router.websocket("/ws/chat")
 async def chat_ws(ws: WebSocket, token: str, session_id: int, db: AsyncSession = Depends(get_db)):
     try:
-        payload = security.decode_token(token)
+        security.decode_token(token)
     except Exception:
         await ws.close()
         return
@@ -28,11 +28,9 @@ async def chat_ws(ws: WebSocket, token: str, session_id: int, db: AsyncSession =
         while True:
             data = json.loads(await ws.receive_text())
             text = data["message"]
-            user_msg = models.Message(session_id=session.id, sender="user", text=text)
-            db.add(user_msg)
+            db.add(models.Message(session_id=session.id, sender="user", text=text))
             reply = bot.weather_reply(text)
-            bot_msg = models.Message(session_id=session.id, sender="bot", text=reply)
-            db.add(bot_msg)
+            db.add(models.Message(session_id=session.id, sender="bot", text=reply))
             await db.commit()
             await ws.send_json({"sender": "bot", "text": reply})
     except WebSocketDisconnect:
